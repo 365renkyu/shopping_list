@@ -7,7 +7,7 @@ class IngredientNotifier extends StateNotifier<List<Ingredient>> {
 
   //追加
   void add(Ingredient ingredient) {
-    //state = [...state, ingredient];
+    state = [...state, ingredient];
   }
 
   //削除

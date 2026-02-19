@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/ingredient.dart';
 import '../providers/ingredient_provider.dart';
 
-//食材追加画面
+//買い物リスト画面
 class AddIngredientPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<AddIngredientPage> createState() => _AddIngredientPageState();
