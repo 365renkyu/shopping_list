@@ -15,7 +15,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '買い出しアプリ',
-      theme: ThemeData(primarySwatch: Colors.green),
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+        appBarTheme: AppBarTheme(
+            backgroundColor: Colors.orange, foregroundColor: Colors.white),
+      ),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       home: IngredientListPage(),
     );
   }

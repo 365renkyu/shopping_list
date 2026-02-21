@@ -23,6 +23,7 @@ class _IngredientListPageState extends ConsumerState<IngredientListPage> {
           ? const Center(child: Text('食材がありません'))
           : Column(
               children: [
+                /*  //「項目」「数量」のヘッダを削除。なくてもわかりそうなので・・
                 //ヘッダー
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -39,15 +40,18 @@ class _IngredientListPageState extends ConsumerState<IngredientListPage> {
                         '数量',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 48),
+                      SizedBox(width: 96),
                     ],
                   ),
                 ),
-                const Divider(),
+                const Divider(thickness: 2),
+                */
                 //リスト
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
                     itemCount: ingredients.length,
+                    separatorBuilder: (context, index) =>
+                        const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final item = ingredients[index];
                       final isChecked = _checkedIds.contains(item.id);
@@ -86,36 +90,54 @@ class _IngredientListPageState extends ConsumerState<IngredientListPage> {
                                 color: isChecked ? Colors.grey : null,
                               ),
                             ),
+                            SizedBox(width: 16),
                           ],
                         ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            ref
-                                .read(ingredientProvider.notifier)
-                                .remove(item.id);
-                            _checkedIds.remove(item.id);
-                          },
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        AddIngredientPage(ingredient: item),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                ref
+                                    .read(ingredientProvider.notifier)
+                                    .remove(item.id);
+                                _checkedIds.remove(item.id);
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
                   ),
                 ),
                 //完了ボタン
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        for (final id in _checkedIds) {
-                          ref.read(ingredientProvider.notifier).remove(id);
-                        }
-                        setState(() {
-                          _checkedIds.clear();
-                        });
-                      },
-                      child: Text('完了'),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      for (final id in _checkedIds) {
+                        ref.read(ingredientProvider.notifier).remove(id);
+                      }
+                      setState(() {
+                        _checkedIds.clear();
+                      });
+                    },
+                    child: Text('完了'),
                   ),
+                ),
               ],
             ),
       floatingActionButton: FloatingActionButton(
